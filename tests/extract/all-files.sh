@@ -12,3 +12,4 @@ assert_exists "$PKGR_EXTRACT_ROOT" \
   "b" \
   "c/d" \
   "c/e/f"
+assert_piped "a" < "$PKGR_EXTRACT_ROOT/a"
