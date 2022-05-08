@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 TEST_ROOT=$(mktemp --dir)
+PKGR_EXTRACT_ROOT=$TEST_ROOT/root
+mkdir -p "$PKGR_EXTRACT_ROOT"
+export PKGR_EXTRACT_ROOT
 
 fail() {
   echo "Fail: $1" >&2
