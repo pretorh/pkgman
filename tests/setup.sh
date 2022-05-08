@@ -53,8 +53,11 @@ create_test_tar() {
 
   for v in "$@" ; do
     f="$data/root/$v"
-    mkdir -p "$(dirname "$f")"
-    echo "$v" > "$f"
+    (
+      umask 022
+      mkdir -p "$(dirname "$f")"
+      echo "$v" > "$f"
+    )
   done
 
   tar -cJf "$data/files.tar.xz" --directory="$data" root || fail "failed to create tar of $data"
