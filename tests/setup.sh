@@ -37,6 +37,16 @@ assert_empty_file() {
   fi
 }
 
+assert_piped() {
+  expected=$1
+  read -r data
+
+  if [ "$data" != "$expected" ] ; then
+    echo "$data" >&2
+    fail "invalid piped data (expected $expected)"
+  fi
+}
+
 create_test_tar() {
   data="$(mktemp --directory --tmpdir="$TEST_ROOT" XXXXX)"
   mkdir -p "$data/root"
