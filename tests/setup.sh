@@ -30,6 +30,13 @@ assert_not_exists() {
   done
 }
 
+assert_empty_file() {
+  if [ -s "$1" ] ; then
+    cat "$1" >&2
+    fail "$1 is not empty"
+  fi
+}
+
 create_test_tar() {
   data="$(mktemp --directory --tmpdir="$TEST_ROOT" XXXXX)"
   mkdir -p "$data/root"
