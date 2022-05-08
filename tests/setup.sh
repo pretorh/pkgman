@@ -4,7 +4,8 @@ TEST_ROOT=$(mktemp --dir)
 
 fail() {
   echo "Fail: $1" >&2
-  caller >&2
+  caller 1 >&2
+  caller 0 >&2
   exit 1
 }
 
