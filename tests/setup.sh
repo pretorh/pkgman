@@ -13,15 +13,19 @@ fail() {
 }
 
 assert_exists() {
+  root=$1
+  shift
   for f in "$@" ; do
-    test -e "$f" || fail "'$f' does not exist"
+    test -e "$root/$f" || fail "'$f' does not exist (in $root)"
   done
 }
 
 assert_not_exists() {
+  root=$1
+  shift
   for f in "$@" ; do
-    if [ -e "$f" ] ; then
-      fail "'$f' does exist"
+    if [ -e "$root/$f" ] ; then
+      fail "'$f' does exist (in $root)"
     fi
   done
 }
