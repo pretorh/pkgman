@@ -7,7 +7,7 @@ export PKGR_EXTRACT_ROOT
 
 fail() {
   echo "Fail: $1" >&2
-  caller 1 >&2
+  caller 1 >&2 || true
   caller 0 >&2
   find "$TEST_ROOT" >&2
   exit 1
