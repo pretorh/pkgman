@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+cd "$(dirname "$0")/../.."
+. tests/setup.sh
+
+# a package
+f=$(create_test_tar "a" "b" "c/d" "c/e/f")
+
+# when some files already exist
+mkdir "$PKGR_EXTRACT_ROOT/c"
+touch "$PKGR_EXTRACT_ROOT/a"
+touch "$PKGR_EXTRACT_ROOT/c/d"
+
+# fail with list of files
+if ./bin/pkgr-check.sh "$f" 2>/dev/null 1>"$TEST_ROOT/stdout" ; then
+  fail "expected check to fail"
+fi
+assert_grep "/a" "$TEST_ROOT/stdout"
+assert_grep "/c/d" "$TEST_ROOT/stdout"
+
+# does not list directories
+grep "/c/$" "$TEST_ROOT/stdout" && fail "should not include directories in output"
+
+exit 0
