@@ -5,6 +5,12 @@ PKGR_EXTRACT_ROOT=$TEST_ROOT/root
 mkdir -p "$PKGR_EXTRACT_ROOT"
 export PKGR_EXTRACT_ROOT
 
+trap trap_error ERR
+
+trap_error() {
+  fail "ERR signal"
+}
+
 fail() {
   echo "Fail: $1" >&2
   caller 1 >&2 || true
