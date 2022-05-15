@@ -16,7 +16,7 @@ touch "$PKGR_EXTRACT_ROOT/b"
 sh ./libexec/check-exists.sh "b" && fail "expected failed when exists"
 
 # relative to PKGR_EXTRACT_ROOT
-PKGR_EXTRACT_ROOT="." sh ./libexec/check-exists.sh "tests/" && fail "expected failed when exists"
+PKGR_EXTRACT_ROOT="." sh ./libexec/check-exists.sh "tests/run.sh" && fail "expected failed when exists"
 
 # output full path of existing
 touch "$PKGR_EXTRACT_ROOT/a"
