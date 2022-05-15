@@ -53,6 +53,16 @@ assert_piped() {
   fi
 }
 
+assert_grep() {
+  content=$1
+  file=$2
+  if ! grep "$content" "$file" ; then
+    echo "$file:" >&2
+    cat "$file" >&2
+    fail "'$1' not found in output"
+  fi
+}
+
 create_test_tar() {
   data="$(mktemp --directory --tmpdir="$TEST_ROOT" XXXXX)"
   mkdir -p "$data/root"
