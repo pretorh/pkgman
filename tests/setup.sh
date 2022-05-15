@@ -25,7 +25,8 @@ skip_todo() {
 }
 
 assert_exists() {
-  root=$1
+  local f
+  local root=$1
   shift
   for f in "$@" ; do
     test -e "$root/$f" || fail "'$f' does not exist (in $root)"
@@ -35,6 +36,7 @@ assert_exists() {
 assert_not_exists() {
   root=$1
   shift
+  local f
   for f in "$@" ; do
     if [ -e "$root/$f" ] ; then
       fail "'$f' does exist (in $root)"
@@ -51,6 +53,7 @@ assert_empty_file() {
 
 assert_piped() {
   expected=$1
+  local data
   read -r data
 
   if [ "$data" != "$expected" ] ; then
@@ -60,8 +63,8 @@ assert_piped() {
 }
 
 assert_grep() {
-  content=$1
-  file=$2
+  local content=$1
+  local file=$2
   if ! grep "$content" "$file" ; then
     echo "$file:" >&2
     cat "$file" >&2
@@ -70,11 +73,13 @@ assert_grep() {
 }
 
 create_test_tar() {
+  local data
+  local v
   data="$(mktemp --directory --tmpdir="$TEST_ROOT" XXXXX)"
   mkdir -p "$data/root"
 
   for v in "$@" ; do
-    f="$data/root/$v"
+    local f="$data/root/$v"
     (
       umask 022
       mkdir -p "$(dirname "$f")"
