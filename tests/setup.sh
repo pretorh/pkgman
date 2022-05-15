@@ -13,6 +13,11 @@ fail() {
   exit 1
 }
 
+skip_todo() {
+  echo "TODO: $1" >&2
+  exit 5
+}
+
 assert_exists() {
   root=$1
   shift
