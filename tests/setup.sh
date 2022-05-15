@@ -5,9 +5,15 @@ PKGR_EXTRACT_ROOT=$TEST_ROOT/root
 mkdir -p "$PKGR_EXTRACT_ROOT"
 export PKGR_EXTRACT_ROOT
 
+trap trap_error ERR
+
+trap_error() {
+  fail "ERR signal"
+}
+
 fail() {
   echo "Fail: $1" >&2
-  caller 1 >&2
+  caller 1 >&2 || true
   caller 0 >&2
   find "$TEST_ROOT" >&2
   exit 1
@@ -50,6 +56,16 @@ assert_piped() {
   if [ "$data" != "$expected" ] ; then
     echo "$data" >&2
     fail "invalid piped data (expected $expected)"
+  fi
+}
+
+assert_grep() {
+  content=$1
+  file=$2
+  if ! grep "$content" "$file" ; then
+    echo "$file:" >&2
+    cat "$file" >&2
+    fail "'$1' not found in output"
   fi
 }
 
