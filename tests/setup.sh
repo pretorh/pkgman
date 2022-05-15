@@ -69,3 +69,9 @@ create_test_tar() {
   tar -cJf "$data/files.tar.xz" --directory="$data" root || fail "failed to create tar of $data"
   echo "$data/files.tar.xz"
 }
+
+if [ "$DEBUG" ] ; then
+  echo "pkgr test: $0" >&2
+  echo "pkgr test: TEST_ROOT=$TEST_ROOT" >&2
+  echo "pkgr test: PKGR_EXTRACT_ROOT=$PKGR_EXTRACT_ROOT" >&2
+fi
