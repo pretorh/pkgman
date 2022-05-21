@@ -96,7 +96,6 @@ create_exclude_file() {
   local v
   file="$(mktemp --tmpdir="$TEST_ROOT" XXXXX.skip)"
   for v in "$@" ; do
-    # todo: remove root prefix
     echo "root/$v" >> "$file"
   done
   echo "$file"
