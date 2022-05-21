@@ -91,6 +91,17 @@ create_test_tar() {
   echo "$data/files.tar.xz"
 }
 
+create_exclude_file() {
+  local file
+  local v
+  file="$(mktemp --tmpdir="$TEST_ROOT" XXXXX.skip)"
+  for v in "$@" ; do
+    # todo: remove root prefix
+    echo "root/$v" >> "$file"
+  done
+  echo "$file"
+}
+
 if [ "$DEBUG" ] ; then
   echo "pkgr test: $0" >&2
   echo "pkgr test: TEST_ROOT=$TEST_ROOT" >&2
