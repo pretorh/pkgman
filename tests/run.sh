@@ -5,7 +5,6 @@ cd "$(dirname "$0")/../tests/"
 failed=0
 skipped=0
 for test_file in **/*.sh ; do
-  echo "# $test_file"
   if bash -e "$test_file" >/dev/null ; then
     echo "ok $test_file"
   elif [ $? = 5 ] ; then

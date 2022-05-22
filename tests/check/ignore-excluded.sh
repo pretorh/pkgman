@@ -16,7 +16,7 @@ x=$(create_exclude_file "a")
 ./bin/pkgr-check.sh "$f" "$x" 2>/dev/null 1>"$TEST_ROOT/stdout" || fail "check failed with exit code $?"
 assert_empty_file "$TEST_ROOT/stdout"
 
-# when unignored files exists, it should still fail and list them in output
+# when unignored files exists, it should still fail and list them in stdout
 touch "$PKGR_EXTRACT_ROOT/b"
 if ./bin/pkgr-check.sh "$f" "$x" 2>/dev/null 1>"$TEST_ROOT/stdout" ; then
   fail "expected check to fail"
