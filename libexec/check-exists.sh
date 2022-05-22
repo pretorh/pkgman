@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 file="$PKGR_EXTRACT_ROOT/$1"
 if [ -d "$file" ] ; then
