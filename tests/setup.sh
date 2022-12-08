@@ -87,7 +87,7 @@ create_test_tar() {
     )
   done
 
-  tar -cJf "$data/files.tar.xz" --directory="$data" root || fail "failed to create tar of $data"
+  ./bin/pkgr-create.sh "$data" || fail "failed to create tar of $data"
   echo "$data/files.tar.xz"
 }
 
