@@ -3,7 +3,7 @@ set -e
 cd "$(dirname "$0")/../.."
 . tests/setup.sh
 
-dir="$(mktemp --directory --tmpdir="$TEST_ROOT" XXXXX)"
+dir=$(mktmp_dir_in_test_root)
 mkdir "$dir/root"
 touch "$dir/root/file1"
 
