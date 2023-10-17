@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 
-TEST_ROOT=$(mktemp --dir)
+mktmp_dir() {
+  mktemp -d
+}
+
+mktmp_dir_in_test_root() {
+  dir="$TEST_ROOT/dir-$RANDOM"
+  mkdir -p "$dir"
+  echo "$dir"
+}
+
+TEST_ROOT=$(mktmp_dir)
 PKGR_EXTRACT_ROOT=$TEST_ROOT/root
 mkdir -p "$PKGR_EXTRACT_ROOT"
 export PKGR_EXTRACT_ROOT
@@ -75,7 +85,7 @@ assert_grep() {
 create_test_tar() {
   local data
   local v
-  data="$(mktemp --directory --tmpdir="$TEST_ROOT" XXXXX)"
+  data="$(mktmp_dir_in_test_root)"
   mkdir -p "$data/root"
 
   for v in "$@" ; do
@@ -94,7 +104,7 @@ create_test_tar() {
 create_exclude_file() {
   local file
   local v
-  file="$(mktemp --tmpdir="$TEST_ROOT" XXXXX.skip)"
+  file="$TEST_ROOT/$RANDOM.skip"
   for v in "$@" ; do
     echo "root/$v" >> "$file"
   done
