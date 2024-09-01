@@ -16,9 +16,20 @@ mkdir -p "$PKGR_EXTRACT_ROOT"
 export PKGR_EXTRACT_ROOT
 
 trap trap_error ERR
+trap trap_exit EXIT
 
 trap_error() {
   fail "ERR signal"
+}
+
+trap_exit() {
+  if [ $? -eq 0 ] ; then
+    echo "ok"
+  else
+    echo "not ok"
+  fi
+  echo "1..1"
+  exit 0
 }
 
 fail() {
@@ -30,8 +41,10 @@ fail() {
 }
 
 skip_todo() {
-  echo "TODO: $1" >&2
-  exit 5
+  echo "ok # skip $1"
+  echo "1..1"
+  trap - EXIT
+  exit 0
 }
 
 assert_exists() {
@@ -79,6 +92,17 @@ assert_grep() {
     echo "$file:" >&2
     cat "$file" >&2
     fail "'$1' not found in output"
+  fi
+}
+
+assert_permissions() {
+  expected=$1
+  file_root=$2
+  file_name=$3
+
+  actual=$(stat -c '%a' "$file_root/$file_name")
+  if [ "$actual" != "$expected" ] ; then
+    fail "invalid permission for '$file_name': expected $expected, got $actual"
   fi
 }
 
