@@ -95,6 +95,17 @@ assert_grep() {
   fi
 }
 
+assert_permissions() {
+  expected=$1
+  file_root=$2
+  file_name=$3
+
+  actual=$(stat -c '%a' "$file_root/$file_name")
+  if [ "$actual" != "$expected" ] ; then
+    fail "invalid permission for '$file_name': expected $expected, got $actual"
+  fi
+}
+
 create_test_tar() {
   local data
   local v

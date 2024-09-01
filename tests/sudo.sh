@@ -14,4 +14,4 @@ assert_exists / "tmp/$name/a"
 # no warnings
 assert_empty_file "$TEST_ROOT/stderr"
 # keep metadata
-stat -c '%a' "/tmp" | assert_piped "1777"
+assert_permissions 1777 "/tmp" ""
