@@ -3,7 +3,7 @@ set -e
 cd "$(dirname "$0")/.."
 . tests/setup.sh
 
-[ "$EUID" == 0 ] || fail "run $0 as root (euid=$EUID)"
+[ "$EUID" == 0 ] || skip_todo "run $0 as root (euid=$EUID)"
 
 name=$(uuidgen)
 f=$(create_test_tar "tmp/$name/a")

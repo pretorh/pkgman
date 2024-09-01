@@ -16,9 +16,20 @@ mkdir -p "$PKGR_EXTRACT_ROOT"
 export PKGR_EXTRACT_ROOT
 
 trap trap_error ERR
+trap trap_exit EXIT
 
 trap_error() {
   fail "ERR signal"
+}
+
+trap_exit() {
+  if [ $? -eq 0 ] ; then
+    echo "ok"
+  else
+    echo "not ok"
+  fi
+  echo "1..1"
+  exit 0
 }
 
 fail() {
@@ -30,8 +41,10 @@ fail() {
 }
 
 skip_todo() {
-  echo "TODO: $1" >&2
-  exit 5
+  echo "ok # skip $1"
+  echo "1..1"
+  trap - EXIT
+  exit 0
 }
 
 assert_exists() {
